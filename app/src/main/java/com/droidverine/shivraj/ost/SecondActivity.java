@@ -17,6 +17,7 @@ public class SecondActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+        /** Receiving an EXPLICIT intent*/
         Intent intent=getIntent();
         String name=intent.getStringExtra("Name");
         String pass=intent.getStringExtra("Email");

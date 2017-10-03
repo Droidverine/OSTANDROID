@@ -22,6 +22,7 @@ public class StartActivity extends AppCompatActivity {
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /** EXPLICIT INTENT*/
                 Intent intent=new Intent(getApplicationContext(),SecondActivity.class);
                 intent.putExtra("Name",editText.getText().toString());
                 intent.putExtra("Email",editText1.getText().toString());
@@ -31,7 +32,7 @@ public class StartActivity extends AppCompatActivity {
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                /** IMPLICIT INTENT*/
                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT," name :"+editText.getText().toString()+"\n Pass :"+editText1.getText().toString());
                 sendIntent.setType("text/plain");
