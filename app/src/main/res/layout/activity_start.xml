@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:weightSum="5"
    >
     <EditText
         android:layout_width="320sp"

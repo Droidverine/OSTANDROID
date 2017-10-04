@@ -12,30 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class StartActivity extends AppCompatActivity {
+    /*Creating variables*/
     Button btnExplicit, btnImplicit, startactforresult;
     EditText editText, editText1;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                Uri contactUri = data.getData();
-                String[] projection = {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
-                Cursor cursor = getContentResolver()
-                        .query(contactUri, projection, null, null, null);
-                cursor.moveToFirst();
-                int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-                String number = cursor.getString(column);
-                editText.setText(number);
-            }
-        }
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        /*referencing variables to ui component*/
         editText = (EditText) findViewById(R.id.nameedt);
         editText1 = (EditText) findViewById(R.id.emailedt);
         btnExplicit = (Button) findViewById(R.id.btnexplicit);
@@ -57,7 +43,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 /** IMPLICIT INTENT*/
                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, " name :" + editText.getText().toString() + "\n Pass :" + editText1.getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, " name :" + editText.getText().toString() + "\n Email :" + editText1.getText().toString());
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
 
@@ -66,12 +52,29 @@ public class StartActivity extends AppCompatActivity {
         startactforresult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
-                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                /**On Activity Result Example*/
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                 startActivityForResult(intent, 1);
             }
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Uri contactUri = data.getData();
+                String[] projection = {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
+                Cursor cursor = getContentResolver()
+                        .query(contactUri, projection, null, null, null);
+                cursor.moveToFirst();
+                int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                String number = cursor.getString(column);
+                editText.setText(number);
+            }
+        }
     }
 }
