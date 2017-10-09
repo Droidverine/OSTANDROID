@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
     TextView textView1,textView2;
+    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,16 @@ public class SecondActivity extends AppCompatActivity {
         textView2=(TextView)findViewById(R.id.emailtxt);
         textView1.setText("Name:"+name);
         textView2.setText("Email:"+pass);
-
+        btn=(Button)findViewById(R.id.btnprev);
+ btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                intent.putExtra("Name", editText.getText().toString());
+                intent.putExtra("Email", editText1.getText().toString());
+                startActivity(intent);
+            }
+});
 
     }
 }
